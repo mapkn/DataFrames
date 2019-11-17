@@ -22,11 +22,24 @@ file = 'Test.csv'
 
 #################################
 
+
+
+
 # Create new DF...using a dictionary
 data = {'name': ['Jason', 'Molly', 'Tina', 'Jake', 'Amy', 'Jake'], 
         'year': [2011, 2012, 2013, 2014, 2015, 2016], 
         'reports': [4, 24, 31, 2, 3,5]}
-df = pd.DataFrame(data, index = ['Cochice', 'Pima', 'Santa Cruz', 'Maricopa', 'Yuma', 'PPP'])
+
+idx=['Cochice', 'Pima', 'Santa Cruz', 'Maricopa', 'Yuma', 'PPP']
+df = pd.DataFrame(data, index = idx)
+
+
+def create_dataframe(data, index):
+    df = pd.DataFrame(data, index=index)
+    return df
+
+
+df_22=create_dataframe(data,idx)
 
 
 # Creates an empty Data Frame
@@ -174,7 +187,7 @@ dfb=df.astype(bool)
 
 
 # Save the DF data to a CSV file
-dfb.to_csv(path_or_buf=os.path.join(path,file))
+#dfb.to_csv(path_or_buf=os.path.join(path,file))
 
 
 
