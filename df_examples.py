@@ -38,8 +38,13 @@ def create_dataframe(data, index):
     df = pd.DataFrame(data, index=index)
     return df
 
+def create_dataframe_2(data, index=''):
+    if index == '':
+        df = pd.DataFrame.from_items(data)
+    else:
+        df = pd.DataFrame(data, index=index)
 
-df_22=create_dataframe(data,idx)
+    return df
 
 
 # Creates an empty Data Frame
@@ -53,6 +58,10 @@ sales = [('account', [' Jones LLC', 'Alpha Co', 'Blue Inc']),
          ]
 dfsales = pd.DataFrame.from_items(sales)
 
+
+
+dfsales2=create_dataframe_2(sales)
+df_22=create_dataframe_2(data,idx)
 
 yy=dfsales['account'].str.strip()
 
@@ -309,7 +318,7 @@ print(list(df4.columns.values))
 
 
 # Sorting the values in a dataframe column - inplace = False
-df=df.sort_values(by='subject', inplace=False)
+df = df.sort_values(by='subject', inplace=False)
 
 # Sorting the values in a dataframe column - inplace = True
 df.sort_values(by='subject', inplace=True)
