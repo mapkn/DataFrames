@@ -10,6 +10,7 @@ Created on Tue Feb 13 09:23:41 2018
 import pandas as pd
 import os.path
 import numpy as np
+from functools import reduce
 
 path = '\\\\apw-grskfs01\\GVAR2\\Global Risk Management'
 file = 'Test.csv'
@@ -43,8 +44,29 @@ def create_dataframe_2(data, index=''):
         df = pd.DataFrame.from_items(data)
     else:
         df = pd.DataFrame(data, index=index)
-
     return df
+
+def filter_df_columns(df, items):
+    allcols = []
+    for item in items:
+        cols = [col for col in df.columns if item.upper() in col.upper()]
+        # cols = [col for col in df_input.columns if (item.upper() in col.upper() and ',5Y' in col.upper()) ]
+        allcols.append(cols)
+    allcols = reduce(lambda x, y: x + y, allcols)
+    df = df.filter(items=allcols, axis=1)
+    return df
+
+
+def df_differences(df, num_periods):
+    df_diff=df.diff(periods=num_periods)
+    return df_diff
+
+def df_correlations(df):
+    return df.corr()
+
+def get_df_columns(df):
+    return list(df.columns.values)
+
 
 
 # Creates an empty Data Frame
@@ -60,8 +82,15 @@ dfsales = pd.DataFrame.from_items(sales)
 
 
 
-dfsales2=create_dataframe_2(sales)
-df_22=create_dataframe_2(data,idx)
+dfsales2 = create_dataframe_2(sales)
+df_22 = create_dataframe_2(data,idx)
+
+
+
+df_100 = filter_df_columns(df_22,['rep'])
+
+
+
 
 yy=dfsales['account'].str.strip()
 
@@ -253,11 +282,11 @@ ff=df[df.name=='MollyMolly'].name.item()
 
 
 # Filter based on column 'name' contents - equivalent to SQL WHERE...LIKE.....plus OR
-df3=df[(df.name.str.contains('ake')) |(df.name=='JasonJason')]
+df3 = df[(df.name.str.contains('ake')) | (df.name == 'JasonJason')]
 
 
 #Filter based on column 'name' contents - equivalent to SQL WHERE 
-df4=df[df.name=='JasonJason']
+df4 = df[df.name == 'JasonJason']
 
 
 
@@ -309,7 +338,9 @@ df2=df_rand.loc[(df_rand['A']>50) & (df_rand['B']>50),['A']]
 
 
 ####### Renaming a column
-df4=df4.rename(columns = {'name':'NAme'})
+df4 = df4.rename(columns = {'name':'NAme'})
+
+
 
 
 
